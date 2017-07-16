@@ -9,7 +9,7 @@ import java.util.Set;
 /**
  * Created by JasperWong on 2017-07-16.
  */
-public class BeanHelper {
+public final class BeanHelper {
     private static final Map<Class<?>,Object> BEAN_MAP=new HashMap<Class<?>,Object>();
 
     static {
