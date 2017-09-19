@@ -1,9 +1,10 @@
 package com.jasper.framework.proxy;
 
+import net.sf.cglib.proxy.MethodProxy;
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import net.sf.cglib.proxy.MethodProxy;
 
 public class ProxyChain {
     private final Class<?> targetClass;
@@ -42,7 +43,7 @@ public class ProxyChain {
         if(proxyIndex<proxyList.size()){
             methodResult=proxyList.get(proxyIndex++).doProxy(this);
         }else{
-            methodResult=methodResult.invokeSuper(targetObject,methodParams);
+            methodResult=methodProxy.invokeSuper(targetObject,methodParams);
         }
         return methodResult;
     }

@@ -3,8 +3,8 @@ package com.jasper.framework.helper;
 import com.jasper.framework.annotation.Controller;
 import com.jasper.framework.annotation.Service;
 import com.jasper.framework.util.ClassUtil;
-import sun.reflect.generics.scope.ClassScope;
 
+import java.lang.annotation.Annotation;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -57,5 +57,31 @@ public final class ClassHelper {
         beanClassSet.addAll(getServiceClassSet());
         beanClassSet.addAll(getControllerClassSet());
         return beanClassSet;
+    }
+
+    /**
+     * 获取包名下某父类或接口的所有子类或实现类
+     */
+    public static Set<Class<?>> getClassSetBySuper(Class<?> superClass){
+        Set<Class<?>> classSet=new HashSet<>();
+        for(Class<?> cls:CLASS_SET){
+            if(superClass.isAssignableFrom(cls)&&!superClass.equals(cls)){
+                classSet.add(cls);
+            }
+        }
+        return classSet;
+    }
+
+    /**
+     * 获取包名下带有某注解的所有类
+     */
+    public static Set<Class<?>> getClassSetByAnnotation(Class<? extends Annotation> annotationClass){
+        Set<Class<?>> classSet=new HashSet<>();
+        for(Class<?> cls:CLASS_SET){
+            if(cls.isAnnotationPresent(annotationClass)){
+                classSet.add(cls);
+            }
+        }
+        return classSet;
     }
 }

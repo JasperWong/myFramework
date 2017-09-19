@@ -16,25 +16,25 @@ public final class ConfigHelper {
      * 获取驱动
      */
     public static String getJdbcDriver(){
-        return PropsUtil.getString(CONFIG_PROPS,ConfigConstant.JDBC_DRIVER);
+        return PropsUtil.getString(CONFIG_PROPS,ConfigConstant.JDBC_DRIVER,""); //个人添加默认值
     }
 
     /**
      * 获取jdbcUrl
      */
     public static String getJdbcUrl(){
-        return PropsUtil.getString(CONFIG_PROPS,ConfigConstant.JDBC_URL);
+        return PropsUtil.getString(CONFIG_PROPS,ConfigConstant.JDBC_URL,"");
     }
 
     /**
      * 获取JDBC密码
      */
     public static String getJdbcPassword(){
-        return PropsUtil.getString(CONFIG_PROPS,ConfigConstant.JDBC_PASSWORD);
+        return PropsUtil.getString(CONFIG_PROPS,ConfigConstant.JDBC_PASSWORD,"");
     }
 
     public static String getAppBasePackage(){
-        return PropsUtil.getString(CONFIG_PROPS,ConfigConstant.APP_BASE_PACKAGE);
+        return PropsUtil.getString(CONFIG_PROPS,ConfigConstant.APP_BASE_PACKAGE,"");
     }
 
     public static String getAppJspPath(){

@@ -1,9 +1,7 @@
 package com.jasper.framework;
 
-import com.jasper.framework.helper.BeanHelper;
-import com.jasper.framework.helper.ClassHelper;
-import com.jasper.framework.helper.ControllerHelper;
-import com.jasper.framework.helper.IocHelper;
+import com.jasper.framework.helper.*;
+import com.jasper.framework.util.ClassUtil;
 
 /**
  * Created by JasperWong on 2017-07-16.
@@ -13,8 +11,12 @@ public final class HelperLoader {
         Class<?>[] classList={
             ClassHelper.class,
             BeanHelper.class,
+            AopHelper.class,
             IocHelper.class,
             ControllerHelper.class
         };
+        for(Class<?> cls:classList){
+            ClassUtil.loadClass(cls.getName(),true);
+        }
     }
 }
