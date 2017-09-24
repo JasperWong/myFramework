@@ -41,7 +41,6 @@ public class DispatcherServlet extends HttpServlet {
 
     @Override
     public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException{
-
         String requestMethod=request.getMethod().toLowerCase();
         String requestPath=request.getPathInfo();
         Handler handler= ControllerHelper.getHandler(requestMethod,requestPath);
@@ -69,9 +68,17 @@ public class DispatcherServlet extends HttpServlet {
                     }
                 }
             }
+            Object result;
             Param param=new Param(paramMap);
             Method actionMethod=handler.getActionMethod();
-            Object result= ReflectionUtil.invokeMethod(controllerBean,actionMethod,param);
+            if(param.isEmpty()){
+                result=ReflectionUtil.invokeMethod(controllerBean,actionMethod,param);
+            }else{
+                result= ReflectionUtil.invokeMethod(controllerBean,actionMethod,param);
+            }
+
+
+
             if(result instanceof View){
                 View view =(View) result;
                 String path=view.getPath();

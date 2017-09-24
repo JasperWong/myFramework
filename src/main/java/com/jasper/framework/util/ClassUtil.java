@@ -18,11 +18,13 @@ import java.util.jar.JarFile;
  * Created by JasperWong on 2017-07-15.
  */
 public final class ClassUtil {
+
     private static final Logger LOGGER= LoggerFactory.getLogger(ClassUtil.class);
 
     /**
      * 获取类加载器
      */
+
     public static ClassLoader getClassLoader(){
         return Thread.currentThread().getContextClassLoader();
     }
