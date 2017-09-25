@@ -4,6 +4,7 @@ import com.jasper.framework.bean.FileParam;
 import com.jasper.framework.bean.FormParam;
 import com.jasper.framework.bean.Param;
 import com.jasper.framework.util.CollectionUtil;
+import com.jasper.framework.util.FileUtil;
 import com.jasper.framework.util.StreamUtil;
 import com.jasper.framework.util.StringUtil;
 import org.apache.commons.fileupload.FileItem;
@@ -63,7 +64,7 @@ public final class UploadHelper {
                                 String fieldValue=fileItem.getString("UTF-8");
                                 formParamList.add(new FormParam(fieldName,fieldValue));
                             }else{
-                                String fileName=FileUtil.getRealFileName(new String(fileItem.getName()).getBytes(),"UTF-8");
+                                String fileName=FileUtil.getRealFileName(new String(fileItem.getName().getBytes(),"UTF-8"));
                                 if(StringUtil.isNotEmpty((fileName))){
                                     long fileSize=fileItem.getSize();
                                     String conetentType=fileItem.getContentType();
@@ -88,7 +89,7 @@ public final class UploadHelper {
         try{
             if(fileParam!=null){
                 String filePath=basePath+fileParam.getFieldName();
-                FileUtil.createFile(filePath);
+                FileUtil.CreateFile(filePath);
                 InputStream inputStream=new BufferedInputStream(fileParam.getInputStream());
                 OutputStream outputStream=new BufferedOutputStream(new FileOutputStream(filePath));
                 StreamUtil.copyStream(inputStream,outputStream);
