@@ -1,5 +1,6 @@
 package com.jasper.framework.bean;
 
+import com.jasper.framework.util.CastUtil;
 import com.jasper.framework.util.CollectionUtil;
 import com.jasper.framework.util.StringUtil;
 
@@ -89,7 +90,33 @@ public class Param {
         return null;
     }
 
-    
+    /**
+     * 验证参数是否为空
+     */
+    public boolean isEmpty(){
+        return CollectionUtil.isEmpty(formParamList)&& CollectionUtil.isEmpty(fileParamList);
+    }
+
+    public String getString(String name){
+        return CastUtil.castString(getFieldMap().get(name));
+    }
+
+    public double getDouble(String name){
+        return CastUtil.castDouble(getFieldMap().get(name));
+    }
+
+    public long getLong(String name){
+        return CastUtil.castLong(getFieldMap().get(name));
+    }
+
+    public int getInt(String name){
+        return CastUtil.castInt(getFieldMap().get(name));
+    }
+
+    public boolean getBoolean(String name){
+        return CastUtil.castBoolean(getFieldMap().get(name));
+    }
+
 
 
 }
