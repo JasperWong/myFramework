@@ -42,6 +42,14 @@ public class DispatcherServlet extends HttpServlet {
 
     @Override
     public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException{
+
+        ServletHelper.init(request,response);
+        try {
+
+        }finally {
+            ServletHelper.destroy();
+        }
+
         String requestMethod=request.getMethod().toLowerCase();
         String requestPath=request.getPathInfo();
 
@@ -65,7 +73,24 @@ public class DispatcherServlet extends HttpServlet {
 
             Map<String,Object> paramMap=new HashMap<String,Object>();
             Enumeration<String> paramNames=request.getParameterNames();
+            Object result;
+//            Param param=new Param(paramMap);
+            Method actionMethod=handler.getActionMethod();
 
+            if(param.isEmpty()){
+                result=ReflectionUtil.invokeMethod(controllerBean,actionMethod,param);
+            }else{
+                result= ReflectionUtil.invokeMethod(controllerBean,actionMethod,param);
+            }
+
+            if(result instanceof View){
+                handlerViewResult((View)result,request,response);
+            }else if(result instanceof Data){
+                handlerDataResult((Data)result,response);
+            }
+        }
+
+    }
 //            while(paramNames.hasMoreElements()){
 //                String paramName=paramNames.nextElement();
 //                String paramValue=request.getParameter(paramName);
@@ -87,24 +112,7 @@ public class DispatcherServlet extends HttpServlet {
 //                    }
 //                }
 //            }
-            Object result;
-//            Param param=new Param(paramMap);
-            Method actionMethod=handler.getActionMethod();
 
-            if(param.isEmpty()){
-                result=ReflectionUtil.invokeMethod(controllerBean,actionMethod,param);
-            }else{
-                result= ReflectionUtil.invokeMethod(controllerBean,actionMethod,param);
-            }
-
-            if(result instanceof View){
-                handlerViewResult((View)result,request,response);
-            }else if(result instanceof Data){
-                handlerDataResult((Data)result,response);
-            }
-        }
-
-    }
 
     private void handlerViewResult(View view,HttpServletRequest request,HttpServletResponse response)throws IOException,ServletException{
         String path=view.getPath();
