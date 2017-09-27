@@ -1,4 +1,4 @@
-package com.jasper.controller;
+package com.jasper.framework.controller;
 
 import com.jasper.framework.annotation.Controller;
 
