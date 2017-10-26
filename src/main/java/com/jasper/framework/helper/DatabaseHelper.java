@@ -1,5 +1,6 @@
 package com.jasper.framework.helper;
 
+import com.jasper.framework.util.CollectionUtil;
 import com.jasper.framework.util.PropsUtil;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -87,7 +88,7 @@ public final class DatabaseHelper {
     }
 
     public static Connection getConnection() {
-//        Connection connection=null;
+
         Connection connection = CONNECTION_HOLDER.get();
         if (connection == null) {
             try {
@@ -102,20 +103,6 @@ public final class DatabaseHelper {
         return connection;
     }
 
-//    public static void closeConnection(){
-//        Connection connection=CONNECTION_HOLDER.get();
-//        if(connection!=null){
-//            try {
-//                connection.close();
-//            }catch (SQLException e){
-//                LOGGER.error("close connection failure",e);
-//                throw new RuntimeException(e);
-//            }finally {
-//                CONNECTION_HOLDER.remove();
-//            }
-//        }
-//    }
-
     private static String getTableName(Class<?> entityClass){
         return entityClass.getSimpleName();
     }
@@ -129,7 +116,7 @@ public final class DatabaseHelper {
             LOGGER.error("query entity list failure",e);
             throw new RuntimeException(e);
         } finally {
-//            closeConnection();
+
         }
         return entityList;
     }
@@ -143,7 +130,6 @@ public final class DatabaseHelper {
             LOGGER.error("query entity failure",e);
             throw new RuntimeException(e);
         }finally {
-//            closeConnection();
         }
         return entity;
     }
@@ -175,7 +161,7 @@ public final class DatabaseHelper {
             LOGGER.error("execute update failure",e);
             throw new RuntimeException(e);
         }finally {
-//            closeConnection();
+
         }
         return rows;
     }
@@ -183,7 +169,7 @@ public final class DatabaseHelper {
      * insert entity
      */
     public static <T> boolean insertEntity(Class<T> entityClass,Map<String,Object> fieldMap){
-        if(CollectionUtils.isEmpty((Collection<?>) fieldMap)){
+        if(CollectionUtil.isEmpty(fieldMap)){
             LOGGER.error("can't insert entity cause fieldMap is empty");
             return false;
         }

@@ -18,7 +18,7 @@ public final class AopHelper {
     static {
         try{
             Map<Class<?>,Set<Class<?>>> proxyMap=createProxyMap();
-            Map<Class<?>,List<Proxy>> targetMap=creatTargetMap(proxyMap);
+            Map<Class<?>,List<Proxy>> targetMap=createTargetMap(proxyMap);
             for(Map.Entry<Class<?>,List<Proxy>> targetEntry:targetMap.entrySet()){
                 Class<?> targetClass=targetEntry.getKey();
                 List<Proxy> proxyList=targetEntry.getValue();
@@ -30,14 +30,7 @@ public final class AopHelper {
         }
     }
 
-    private static Set<Class<?>> createTargetClassSet(Aspect aspect) throws Exception{
-        Set<Class<?>> targetClassSet=new HashSet<>();
-        Class<? extends Annotation> annotation=aspect.value();
-        if(annotation!=null&&!annotation.equals(Aspect.class)){
-            targetClassSet.addAll(ClassHelper.getClassSetByAnnotation(annotation));
-        }
-        return targetClassSet;
-    }
+
 
     private static Map<Class<?>,Set<Class<?>>> createProxyMap() throws Exception{
         Map<Class<?>,Set<Class<?>>> proxyMap=new HashMap<>();
@@ -52,7 +45,16 @@ public final class AopHelper {
         return proxyMap;
     }
 
-    private static Map<Class<?>,List<Proxy>> creatTargetMap(Map<Class<?>,Set<Class<?>>> proxyMap)throws  Exception{
+    private static Set<Class<?>> createTargetClassSet(Aspect aspect) throws Exception{
+        Set<Class<?>> targetClassSet=new HashSet<>();
+        Class<? extends Annotation> annotation=aspect.value();
+        if(annotation!=null&&!annotation.equals(Aspect.class)){
+            targetClassSet.addAll(ClassHelper.getClassSetByAnnotation(annotation));
+        }
+        return targetClassSet;
+    }
+
+    private static Map<Class<?>,List<Proxy>> createTargetMap(Map<Class<?>,Set<Class<?>>> proxyMap)throws  Exception{
         Map<Class<?>,List<Proxy>> targetMap=new HashMap<>();
         for(Map.Entry<Class<?>,Set<Class<?>>> proxyEntry:proxyMap.entrySet()){
             Class<?> proxyClass=proxyEntry.getKey();
